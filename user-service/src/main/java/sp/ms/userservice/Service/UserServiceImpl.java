@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import lombok.AllArgsConstructor;
 import sp.ms.userservice.DTO.DepartmentDto;
@@ -20,6 +21,7 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     @Autowired
     private RestTemplate restTemplate;
+    private WebClient webClient;
 
     @Override
     public User saveUser(User user) {
@@ -35,14 +37,20 @@ public class UserServiceImpl implements UserService {
 
         //get the department data from department service
         // ResponseEntity<DepartmentDto> responseEntity = new ResponseEntity<>(null);
-
+        
         // RestTemplate to make a REST API call to department-service
         // Retrieve a representation by doing a GET on the URL. The response is converted and stored in a ResponseEntity.
-        ResponseEntity<DepartmentDto> responseEntity = restTemplate
+        /*ResponseEntity<DepartmentDto> responseEntity = restTemplate
             .getForEntity("http://localhost:8989/api/departments/" + user.getDepartmentId(),
             DepartmentDto.class);
 
-        DepartmentDto departmentDto = responseEntity.getBody();
+        DepartmentDto departmentDto = responseEntity.getBody();*/
+
+        DepartmentDto departmentDto = webClient.get()
+            .uri("http://localhost:8989/api/departments/" + user.getDepartmentId())
+            .retrieve()
+            .bodyToMono(DepartmentDto.class)
+            .block();
         
         responseDto.setUser(userDto);
         responseDto.setDepartment(departmentDto);
