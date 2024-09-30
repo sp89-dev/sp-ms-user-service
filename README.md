@@ -1,4 +1,4 @@
-# sp-ms-user-service
+# sp-ms-user-service.
 Micro service communication using RestTemplate (org.springframework.web.client.RestTemplate).
 # User service and Department service
 Create two spring boot microservices (sp-ms-department-service and sp-ms-user-service) and how to use RestTemplate class to make synchronous communication between multiple microservices.  
