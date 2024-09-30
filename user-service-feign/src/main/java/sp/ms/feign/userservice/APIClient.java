@@ -9,7 +9,10 @@ import sp.ms.feign.userservice.DTO.DepartmentDto;
 // @FeignClient(value = "department-service", url = "http://localhost:8989")
 // after spring cloud config server - department service port is 8080 and user service fiegn port is 8081
 // @FeignClient(value = "department-service", url = "http://localhost:8080")// config server
-@FeignClient(value = "department-service", url = "http://DEPARTMENT-SERVICE") // eureka server
+// @FeignClient(value = "department-service", url = "http://DEPARTMENT-SERVICE") // eureka server
+@FeignClient(value = "department-service", url = "http://localhost:8080/") // eureka server - here localhost cab be replaced with eureka server name
+// DEPARTMENT-SERVICE	n/a (1)	(1)	UP (1) - ABC:department-service
+// http://ABC:8080/
 public interface APIClient {
     @GetMapping("/api/departments/{id}")
     DepartmentDto findDepartmentById(@PathVariable("id") Long departmentId);
